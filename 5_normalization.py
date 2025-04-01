@@ -1,5 +1,6 @@
 from itertools import count
 import matplotlib.pyplot as plt
+import numpy as np
 
 h = 1
 m = 1
@@ -14,7 +15,7 @@ dx = a * 0.01
 E = 0
 dE = 0.01
 
-nmax = 4
+nmax = 3
 counter = 1  # Used to count eigenfunctions during computation
 
 xlist = []
@@ -50,16 +51,31 @@ while counter <= nmax:
     # Ensure that the eigenvalue step increases appropriately
     E = E * 1.1
 
-print('EigenEnergies: ', eigenEnergies)
-print('Eigenfunctions: ', eigenfunctions)
-print('EigenfunctionsxList: ', eigenfunctionsxList, '\n')
+# print('EigenEnergies: ', eigenEnergies)
+print('Eigenfunctions OLD: ', eigenfunctions)
+# print('EigenfunctionsxList: ', eigenfunctionsxList)
 
-# print('Eigenfunctions: ', eigenfunctions)
-# print('Eigenfunctions: ', eigenfunctions)
-# print('Eigenfunctions: ', eigenfunctions)
+# todo NORMALIZATION OF INDIVIDUAL WAVES
+# normalization condition is integrate the eqn
+# Integration is the small values multiplied by the increments
+
+
+# Normalize all eigenfunctions
+for i in range(len(eigenfunctions)):
+    # Compute normalization constant for the i-th eigenfunction
+    normConstant = np.dot(eigenfunctions[i], eigenfunctions[i]) * dx
+    # Normalize the eigenfunction by dividing each value
+    for j in range(len(eigenfunctions[i])):
+        eigenfunctions[i][j] = eigenfunctions[i][j] / np.sqrt(normConstant)
+
+# Verify normalization of the third eigenfunction
+normConstantNew = np.dot(eigenfunctions[0][0], eigenfunctions[0][0]) * dx
+print(normConstantNew) # Should be 1
+print('Eigenfunctions NEW: ', eigenfunctions)
 
 # Plotting the eigenfunctions
-counter = 0  # Reset counter to align with zero-based indexing of eigenfunctions
+counter = 0  # Reset counter to align with zero-based inde
+# xing of eigenfunctions
 while counter < len(eigenfunctions):
     plt.plot(eigenfunctionsxList[counter], eigenfunctions[counter], label=f"Eigenfunction {counter + 1}")
     counter += 1
