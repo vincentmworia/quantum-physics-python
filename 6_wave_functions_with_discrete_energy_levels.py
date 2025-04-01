@@ -15,7 +15,7 @@ dx = a * 0.01
 E = 0
 dE = 0.01
 
-nmax = 3
+nmax = 5
 counter = 1  # Used to count eigenfunctions during computation
 
 xlist = []
@@ -55,9 +55,6 @@ while counter <= nmax:
 print('Eigenfunctions OLD: ', eigenfunctions)
 # print('EigenfunctionsxList: ', eigenfunctionsxList)
 
-# todo NORMALIZATION OF INDIVIDUAL WAVES
-# normalization condition is integrate the eqn
-# Integration is the small values multiplied by the increments
 
 
 # Normalize all eigenfunctions
@@ -70,15 +67,20 @@ for i in range(len(eigenfunctions)):
 
 # Verify normalization of the first eigenfunction
 normConstantNew = np.dot(eigenfunctions[0], eigenfunctions[0]) * dx
-print(normConstantNew) # Should be 1
+print(normConstantNew)  # Should be 1
 print('Eigenfunctions NEW: ', eigenfunctions)
 
-# Plotting the eigenfunctions
-counter = 0  # Reset counter to align with zero-based inde
-# xing of eigenfunctions
-while counter < len(eigenfunctions):
-    plt.plot(eigenfunctionsxList[counter], eigenfunctions[counter], label=f"Eigenfunction {counter + 1}")
-    counter += 1
+# # Plotting the eigenfunctions
+# counter = 0  # Reset counter to align with zero-based indexing of eigenfunctions
+# while counter < len(eigenfunctions):
+#     plt.plot(eigenfunctionsxList[counter], eigenfunctions[counter], label=f"Eigenfunction {counter + 1}")
+#     counter += 1
+
+
+# todo Scaling up
+for i in range(len(eigenfunctions)):
+    shifted_psi = eigenEnergies[i] + np.array(eigenfunctions[i])
+    plt.plot(eigenfunctionsxList[i], shifted_psi, label=f"Eigenfunction {i + 1} at E={eigenEnergies[i]:.2f}")
 
 plt.xlabel("x")
 plt.ylabel("psi")
